@@ -2,6 +2,7 @@ import type { AppConfig } from "./config.js";
 import type { DealStore } from "./store.js";
 import { pollSource } from "./poller.js";
 import { sendWxPusher } from "./notify/wxpusher.js";
+import { formatDealMessage } from "./notify/template.js";
 
 export function startScheduler(opts: {
   config: AppConfig;
@@ -14,7 +15,30 @@ export function startScheduler(opts: {
       content,
     });
 
+  const flushPending = async () => {
+    for (const item of opts.store.listPendingNotifications()) {
+      const deal = opts.store.getDeal(item.dealId);
+      if (!deal) continue;
+      const content = formatDealMessage({
+        brand: deal.brand,
+        title: deal.title,
+        summary: deal.summary,
+        url: deal.url,
+        city: deal.city,
+        origin: deal.origin,
+      });
+      try {
+        await notify(content);
+        opts.store.markNotificationSent(item.notificationId);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        opts.store.markNotificationFailed(item.notificationId, message);
+      }
+    }
+  };
+
   const tick = async () => {
+    await flushPending();
     for (const source of opts.config.sources.filter((s) => s.enabled)) {
       await pollSource({
         source,

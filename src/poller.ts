@@ -24,7 +24,7 @@ export async function pollSource(opts: {
     }
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const raw = await res.text();
-    await processRawDeal({
+    const result = await processRawDeal({
       store: opts.store,
       raw,
       origin: "poll",
@@ -34,13 +34,22 @@ export async function pollSource(opts: {
       force: false,
       fallbackUrl: opts.source.url,
       sourceId: opts.source.id,
+      brandHint: opts.source.brandHint,
       notify: opts.notify,
     });
+    if (result.status === "parse_failed") {
+      throw Object.assign(new Error("needs_manual parse_failed"), {
+        needsManual: true,
+      });
+    }
+    if (result.status === "notify_failed") {
+      throw new Error("notify_failed");
+    }
     opts.store.recordSourceSuccess(opts.source.id);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     const failCount = opts.store.recordSourceFailure(opts.source.id, message);
-    if (failCount >= opts.failureAlertThreshold) {
+    if (failCount === opts.failureAlertThreshold) {
       await opts.notify(
         formatMaintenanceMessage(opts.source.id, failCount, message),
       );

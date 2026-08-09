@@ -12,6 +12,7 @@ export function parseDealContent(opts: {
   raw: string;
   brands: string[];
   fallbackUrl: string | null;
+  brandHint?: string;
 }): ParsedDeal | null {
   const looksHtml = /<html|<body|<h1|<a\s/i.test(opts.raw);
   let title = opts.raw.trim();
@@ -27,7 +28,10 @@ export function parseDealContent(opts: {
     if (firstLine) title = firstLine;
   }
 
-  const brand = matchBrand(title, opts.brands) ?? matchBrand(opts.raw, opts.brands);
+  const brand =
+    matchBrand(title, opts.brands) ??
+    matchBrand(opts.raw, opts.brands) ??
+    (opts.brandHint && opts.brands.includes(opts.brandHint) ? opts.brandHint : null);
   if (!brand) return null;
 
   const price = title.match(/(\d+(?:\.\d+)?)\s*元?/);

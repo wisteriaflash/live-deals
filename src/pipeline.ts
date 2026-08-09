@@ -14,6 +14,7 @@ export async function processRawDeal(opts: {
   force: boolean;
   fallbackUrl: string | null;
   sourceId?: string | null;
+  brandHint?: string;
   notify: (content: string) => Promise<void>;
 }): Promise<{ status: "notified" | "deduped" | "parse_failed" | "notify_failed"; dealId?: number }> {
   opts.store.insertRaw(opts.sourceId ?? null, opts.raw);
@@ -21,6 +22,7 @@ export async function processRawDeal(opts: {
     raw: opts.raw,
     brands: opts.brands,
     fallbackUrl: opts.fallbackUrl,
+    brandHint: opts.brandHint,
   });
   if (!parsed) return { status: "parse_failed" };
 

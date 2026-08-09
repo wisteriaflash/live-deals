@@ -90,4 +90,44 @@ export class DealStore {
       )
       .all() as Array<{ notificationId: number; dealId: number }>;
   }
+
+  getDeal(dealId: number): DealInput | null {
+    const row = this.db
+      .prepare(
+        `SELECT fingerprint, brand, title, summary, url, city, origin FROM deals WHERE id = ?`,
+      )
+      .get(dealId) as
+      | {
+          fingerprint: string;
+          brand: string;
+          title: string;
+          summary: string;
+          url: string | null;
+          city: string;
+          origin: DealInput["origin"];
+        }
+      | undefined;
+    if (!row) return null;
+    return row;
+  }
+
+  markNotificationSent(notificationId: number) {
+    this.db
+      .prepare(
+        `UPDATE notifications
+         SET status = 'sent', sent_at = ?, attempts = attempts + 1, last_error = NULL
+         WHERE id = ?`,
+      )
+      .run(new Date().toISOString(), notificationId);
+  }
+
+  markNotificationFailed(notificationId: number, error: string) {
+    this.db
+      .prepare(
+        `UPDATE notifications
+         SET status = 'pending', attempts = attempts + 1, last_error = ?
+         WHERE id = ?`,
+      )
+      .run(error, notificationId);
+  }
 }
