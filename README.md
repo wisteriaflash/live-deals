@@ -2,7 +2,7 @@
 
 上海美团直播快餐优惠提醒。**本机 Node.js + TypeScript 常驻服务**（v1），通过 WxPusher 推送到个人微信。不是网站，也不是安卓 App。
 
-规格与变更说明见 [`openspec/changes/add-shanghai-fastfood-alerts/`](openspec/changes/add-shanghai-fastfood-alerts/)。
+当前行为规格见 [`openspec/specs/`](openspec/specs/)。v1 变更归档：[`openspec/changes/archive/2026-08-09-add-shanghai-fastfood-alerts/`](openspec/changes/archive/2026-08-09-add-shanghai-fastfood-alerts/)。下一变更：[`openspec/changes/add-live-browser-promo-polling/`](openspec/changes/add-live-browser-promo-polling/)。
 
 ## 环境准备
 
