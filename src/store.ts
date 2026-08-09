@@ -130,4 +130,36 @@ export class DealStore {
       )
       .run(error, notificationId);
   }
+
+  insertPriceObservation(input: {
+    normalizedName: string;
+    price: number;
+    sourceId: string | null;
+    seenAt?: string;
+  }): number {
+    const info = this.db
+      .prepare(
+        `INSERT INTO price_history (normalized_name, price, source_id, seen_at)
+         VALUES (?, ?, ?, ?)`,
+      )
+      .run(
+        input.normalizedName,
+        input.price,
+        input.sourceId,
+        input.seenAt ?? new Date().toISOString(),
+      );
+    return Number(info.lastInsertRowid);
+  }
+
+  listPricesForName(normalizedName: string, windowDays: number): number[] {
+    const since = new Date(Date.now() - windowDays * 86400_000).toISOString();
+    const rows = this.db
+      .prepare(
+        `SELECT price FROM price_history
+         WHERE normalized_name = ? AND seen_at >= ?
+         ORDER BY seen_at ASC`,
+      )
+      .all(normalizedName, since) as Array<{ price: number }>;
+    return rows.map((r) => r.price);
+  }
 }

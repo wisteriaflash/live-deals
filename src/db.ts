@@ -39,6 +39,15 @@ export function openDb(dbPath: string): Database.Database {
       last_error TEXT,
       updated_at TEXT NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS price_history (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      normalized_name TEXT NOT NULL,
+      price REAL NOT NULL,
+      source_id TEXT,
+      seen_at TEXT NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS idx_price_history_name_seen
+      ON price_history (normalized_name, seen_at);
   `);
   return db;
 }
