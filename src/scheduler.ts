@@ -1,5 +1,7 @@
 import type { AppConfig } from "./config.js";
 import type { DealStore } from "./store.js";
+import { isMeituanLiveUrl } from "./live_url.js";
+import { pollLiveSource } from "./live_poller.js";
 import { pollSource } from "./poller.js";
 import { sendWxPusher } from "./notify/wxpusher.js";
 import { formatDealMessage } from "./notify/template.js";
@@ -40,15 +42,31 @@ export function startScheduler(opts: {
   const tick = async () => {
     await flushPending();
     for (const source of opts.config.sources.filter((s) => s.enabled)) {
-      await pollSource({
-        source,
-        store: opts.store,
-        brands: opts.config.brands,
-        city: opts.config.city,
-        dedupeWindowHours: opts.config.dedupeWindowHours,
-        failureAlertThreshold: opts.config.failureAlertThreshold,
-        notify,
-      });
+      if (isMeituanLiveUrl(source.url)) {
+        await pollLiveSource({
+          source,
+          store: opts.store,
+          brands: opts.config.brands,
+          city: opts.config.city,
+          dedupeWindowHours: opts.config.dedupeWindowHours,
+          failureAlertThreshold: opts.config.failureAlertThreshold,
+          baselineWindowDays: opts.config.baselineWindowDays,
+          minDiscountYuan: opts.config.minDiscountYuan,
+          minDiscountRatio: opts.config.minDiscountRatio,
+          browserChannel: opts.config.browserChannel,
+          notify,
+        });
+      } else {
+        await pollSource({
+          source,
+          store: opts.store,
+          brands: opts.config.brands,
+          city: opts.config.city,
+          dedupeWindowHours: opts.config.dedupeWindowHours,
+          failureAlertThreshold: opts.config.failureAlertThreshold,
+          notify,
+        });
+      }
     }
   };
 
