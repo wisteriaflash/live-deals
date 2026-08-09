@@ -1,0 +1,16 @@
+city: 上海
+brands:
+  - 麦当劳
+  - 肯德基
+  - 汉堡王
+  - 必胜客
+pollIntervalMinutes: 8
+dedupeWindowHours: 12
+failureAlertThreshold: 3
+inboxHost: 127.0.0.1
+inboxPort: 8787
+sources:
+  - id: example-mcd
+    url: "https://example.invalid/meituan-live-mcd"
+    brandHint: 麦当劳
+    enabled: false
