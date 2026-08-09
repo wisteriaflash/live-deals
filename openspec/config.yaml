@@ -2,9 +2,10 @@ schema: spec-driven
 context: |
   Personal Meituan live deal alert bot for Shanghai fast-food brands.
   Stack: Node.js 20+ + TypeScript lightweight service (not NestJS).
-  Primary: poll curated public sources. Fallback: manual link inbox.
-  Notify owner WeChat only (WxPusher); owner forwards to family group.
-  Future Android (Expo/RN) is out of v1; polling stays on the Node service.
+  v1: poll curated sources + manual inbox; WxPusher to owner.
+  Next change add-live-browser-promo-polling: Playwright intercepts
+  livestudiobaseinfo-style JSON, parses promo text, discount gate (≥¥3 or ≥10%).
+  No official purchasable Meituan live-deal Open API for consumers.
 artifacts:
   - id: proposal
     generates: proposal.md

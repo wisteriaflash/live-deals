@@ -8,6 +8,10 @@ This repo uses OpenSpec. Read `openspec/project.md` first.
 - Artifact order: `proposal.md` → `specs/**` → `design.md` → `tasks.md` → implement.
 - After implementation, archive the change so deltas merge into `openspec/specs/`.
 
-Active change: `add-shanghai-fastfood-alerts`.
+Active changes:
 
-Implementation detail lives in the change folder as `plan.md` (merged with OpenSpec; not required under `docs/superpowers/plans/`). Use `tasks.md` as the summary checklist and `plan.md` for file-level steps.
+- `add-shanghai-fastfood-alerts` — v1 baseline (fetch/inbox/WxPusher); largely implemented on branch
+- `add-live-browser-promo-polling` — next: Playwright intercept live JSON + promo parse + discount gate
+
+Implementation detail for the next change: `openspec/changes/add-live-browser-promo-polling/` (`proposal.md`, `design.md`, `specs/`, `tasks.md`).
+
