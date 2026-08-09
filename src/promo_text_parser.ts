@@ -5,7 +5,8 @@ export function normalizeProductName(name: string): string {
 }
 
 export function parsePromoText(...parts: Array<string | null | undefined>): PromoItem[] {
-  const text = parts.filter(Boolean).join(" ");
+  // Join with newline so title (often brand-only, no price) does not bleed into subtitle offer names.
+  const text = parts.filter(Boolean).join("\n");
   if (!text.trim()) return [];
 
   const chunks = text
