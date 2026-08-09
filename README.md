@@ -8,6 +8,7 @@
 
 - **Node.js 20+**（项目根目录有 `.nvmrc`，可用 `nvm use`）
 - 注册 [WxPusher](https://wxpusher.zjiecode.com/)，获取 `appToken` 与关注者 `uid`
+- 直播巡检需要本机已安装 **Google Chrome**（Playwright `channel: chrome`）。也可把 `browserChannel` 设为 `chromium` 并执行 `npx playwright install chromium`。
 
 ```bash
 npm install

@@ -17,5 +17,9 @@ describe("loadConfig", () => {
     expect(cfg.brands).toContain("肯德基");
     expect(cfg.pollIntervalMinutes).toBeGreaterThanOrEqual(5);
     expect(cfg.wxpusher.appToken).toBe("token");
+    expect(cfg.minDiscountYuan).toBe(3);
+    expect(cfg.minDiscountRatio).toBe(0.1);
+    expect(cfg.baselineWindowDays).toBe(14);
+    expect(cfg.browserChannel).toBe("chrome");
   });
 });

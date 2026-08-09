@@ -7,6 +7,10 @@ brands:
 pollIntervalMinutes: 8
 dedupeWindowHours: 12
 failureAlertThreshold: 3
+minDiscountYuan: 3
+minDiscountRatio: 0.10
+baselineWindowDays: 14
+browserChannel: chrome
 inboxHost: 127.0.0.1
 inboxPort: 8787
 sources:
