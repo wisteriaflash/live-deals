@@ -1,0 +1,16 @@
+schema: spec-driven
+context: |
+  Personal Meituan live deal alert bot for Shanghai fast-food brands.
+  Stack: Node.js 20+ + TypeScript lightweight service (not NestJS).
+  Primary: poll curated public sources. Fallback: manual link inbox.
+  Notify owner WeChat only (WxPusher); owner forwards to family group.
+  Future Android (Expo/RN) is out of v1; polling stays on the Node service.
+artifacts:
+  - id: proposal
+    generates: proposal.md
+  - id: specs
+    generates: specs/**/*.md
+  - id: design
+    generates: design.md
+  - id: tasks
+    generates: tasks.md
