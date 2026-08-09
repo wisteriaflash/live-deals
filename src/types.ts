@@ -16,3 +16,11 @@ export type SourceConfig = {
   brandHint?: string;
   enabled: boolean;
 };
+
+export type PromoItem = {
+  name: string;
+  price: number;
+  listPrice?: number;
+};
+
+export type BrowserChannel = "chrome" | "chromium";
