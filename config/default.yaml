@@ -14,3 +14,7 @@ sources:
     url: "https://example.invalid/meituan-live-mcd"
     brandHint: 麦当劳
     enabled: false
+  - id: mcd-welfare-live
+    url: "https://g.meituan.com/app/business-live-broadcast/live-detail-new.html?liveid=15483849"
+    brandHint: 麦当劳
+    enabled: true

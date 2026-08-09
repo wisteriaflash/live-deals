@@ -6,8 +6,10 @@ import { DealStore } from "./store.js";
 import { startScheduler } from "./scheduler.js";
 import { createInboxApp } from "./inbox/server.js";
 import { sendWxPusher } from "./notify/wxpusher.js";
+import { loadEnvFile } from "./loadEnv.js";
 
 async function main() {
+  loadEnvFile();
   const config = loadConfig({
     configPath: path.join(process.cwd(), "config/default.yaml"),
     env: process.env,

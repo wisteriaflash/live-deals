@@ -40,9 +40,11 @@ cp .env.example .env   # 填入 WXPUSHER_APP_TOKEN、WXPUSHER_UID
 ## 运行
 
 ```bash
-npm start      # 生产模式
+npm start      # 生产模式（会自动加载项目根目录 .env）
 npm run dev    # 开发模式（文件变更自动重启）
 ```
+
+启动前请在项目根目录配置 `.env`（`cp .env.example .env`）。Node 不会默认读取 `.env`，本项目会在启动时加载。
 
 启动后：
 
